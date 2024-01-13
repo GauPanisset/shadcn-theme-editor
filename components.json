@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@/technical/ui",
+    "components": "@/technical",
     "utils": "@/technical/ui/helpers"
   }
 }
