@@ -114,7 +114,7 @@ const useTheme = () => {
     }));
   };
 
-  return { theme, resetTheme: () => setThemes(RESET), updateTheme };
+  return { theme, themes, resetTheme: () => setThemes(RESET), updateTheme };
 };
 
 export { useTheme };

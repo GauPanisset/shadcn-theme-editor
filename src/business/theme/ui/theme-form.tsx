@@ -11,6 +11,7 @@ import { Form } from '@/technical/ui/form';
 import { themeSchema } from '../model/schema';
 import { Theme } from '../model/type';
 import { useTheme } from '../services/use-theme';
+import { ThemeCodePreview } from './theme-code-preview';
 import { ThemeFormDuoField } from './theme-form-duo-field';
 import { ThemeFormField } from './theme-form-field';
 import { ThemeModeSwitch } from './theme-mode-switch';
@@ -141,7 +142,7 @@ const ThemeForm = () => {
                 />
               </div>
             </div>
-            <div className="absolute bottom-0 right-0 flex h-full w-fit flex-col-reverse space-y-2">
+            <div className="absolute bottom-0 right-0 flex h-full w-fit flex-col-reverse">
               <Button
                 type="button"
                 className="rounded-full"
@@ -152,6 +153,7 @@ const ThemeForm = () => {
                 <RotateCcw />
               </Button>
               <ThemeModeSwitch />
+              <ThemeCodePreview />
             </div>
           </div>
         </form>

@@ -21,6 +21,7 @@ const ThemeModeSwitch: React.FunctionComponent = () => {
 
   return (
     <Button
+      className="rounded-full"
       type="button"
       variant="ghost"
       size="icon"
