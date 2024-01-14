@@ -4,7 +4,6 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
 import { ThemeModeProvider } from '@/business/theme/ui/theme-mode-provider';
-import { ThemeModeSwitch } from '@/business/theme/ui/theme-mode-switch';
 import { cn } from '@/technical/ui/helpers';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -23,9 +22,10 @@ const RootLayout: React.FunctionComponent<Props> = ({ children }) => {
     <html lang="en" suppressHydrationWarning={true} className="overflow-hidden">
       <body className={cn('flex h-screen flex-col', inter.className)}>
         <ThemeModeProvider>
-          <header className="z-10 flex items-center justify-between border-b p-4">
-            <h1 className="font-mono text-xl font-bold">shadcn theme editor</h1>
-            <ThemeModeSwitch />
+          <header className="z-10 border-b p-4 px-6">
+            <h1 className="font-mono text-3xl font-bold">
+              shadcn theme editor
+            </h1>
           </header>
           <main className="flex min-h-0 w-full flex-1 flex-col overflow-hidden">
             {children}

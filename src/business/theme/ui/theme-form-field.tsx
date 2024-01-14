@@ -16,7 +16,7 @@ type Props<Values extends FieldValues, Name extends Path<Values>> = {
   control: Control<Values>;
   label: string;
   name: Name;
-  title?: string;
+  className?: React.ComponentProps<typeof FormItem>['className'];
 };
 
 const textColorVariants = cva('', {
@@ -35,7 +35,7 @@ const ThemeFormField = <Values extends FieldValues, Name extends Path<Values>>({
   control,
   label,
   name,
-  title,
+  className,
 }: Props<Values, Name>) => {
   return (
     <FormField
@@ -43,34 +43,40 @@ const ThemeFormField = <Values extends FieldValues, Name extends Path<Values>>({
       name={name}
       render={({ field: { value, ...otherField } }) => {
         const currentColor = color(value);
+        const currentTextColorVariant = currentColor.isDark()
+          ? 'dark'
+          : 'light';
 
         return (
-          <FormItem className="relative h-full w-full overflow-hidden">
-            {title ? (
-              <h6
-                className={cn(
-                  'pointer-events-none absolute left-0 top-0 z-10 p-2 text-xl font-semibold tracking-tight text-foreground',
-                  textColorVariants({
-                    color: currentColor.isDark() ? 'dark' : 'light',
-                  })
-                )}
-              >
-                {title}
-              </h6>
-            ) : null}
+          <FormItem
+            className={cn(
+              'group relative h-full grow overflow-hidden transition-[width,flex] duration-300',
+              className
+            )}
+          >
+            <div
+              className={cn(
+                'pointer-events-none absolute inset-0 z-10 flex items-center justify-end p-4 text-sm font-bold text-foreground opacity-0 transition-opacity group-hover:opacity-100',
+                textColorVariants({
+                  color: currentTextColorVariant,
+                })
+              )}
+            >
+              {currentColor.hex()}
+            </div>
             <FormControl>
               <Input
                 type="color"
                 {...otherField}
                 value={currentColor.hex()}
-                className="relative -left-1/2 -top-1/2 h-[200%] w-[200%] cursor-pointer border-none p-0"
+                className="absolute -left-1/2 -top-1/2 z-0 h-[200%] w-[200%] cursor-pointer border-none p-0"
               />
             </FormControl>
             <FormLabel
               className={cn(
-                'pointer-events-none absolute bottom-0 left-0 p-2 text-foreground',
+                'pointer-events-none absolute bottom-0 left-0 w-full truncate p-1 text-xs text-foreground',
                 textColorVariants({
-                  color: currentColor.isDark() ? 'dark' : 'light',
+                  color: currentTextColorVariant,
                 })
               )}
             >

@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { RotateCcw } from 'lucide-react';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -10,7 +11,9 @@ import { Form } from '@/technical/ui/form';
 import { themeSchema } from '../model/schema';
 import { Theme } from '../model/type';
 import { useTheme } from '../services/use-theme';
+import { ThemeFormDuoField } from './theme-form-duo-field';
 import { ThemeFormField } from './theme-form-field';
+import { ThemeModeSwitch } from './theme-mode-switch';
 
 const ThemeForm = () => {
   const { theme, resetTheme, updateTheme } = useTheme();
@@ -31,141 +34,125 @@ const ThemeForm = () => {
 
   return (
     <>
-      <Button className="absolute bottom-4 right-4 z-50" onClick={resetTheme}>
-        Reset
-      </Button>
       <Form {...form}>
         <form
           onBlur={form.handleSubmit(onSubmit)}
-          className="flex h-full flex-col font-mono"
+          className="flex h-full flex-col space-y-2"
         >
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="background"
-              label="Background"
-              title="Base"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="foreground"
-              label="Foreground"
+              items={[
+                { name: 'background', label: 'Background' },
+                { name: 'foreground', label: 'Foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="card"
-              label="Background"
-              title="Card"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="cardForeground"
-              label="Foreground"
+              items={[
+                { name: 'card', label: 'Card background' },
+                { name: 'cardForeground', label: 'Card foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="popover"
-              label="Background"
-              title="Popover"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="popoverForeground"
-              label="Foreground"
+              items={[
+                { name: 'popover', label: 'Popover background' },
+                { name: 'popoverForeground', label: 'Popover foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="primary"
-              label="Background"
-              title="Primary"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="primaryForeground"
-              label="Foreground"
+              items={[
+                { name: 'primary', label: 'Primary background' },
+                { name: 'primaryForeground', label: 'Primary foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="secondary"
-              label="Background"
-              title="Secondary"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="secondaryForeground"
-              label="Foreground"
+              items={[
+                { name: 'secondary', label: 'Secondary background' },
+                { name: 'secondaryForeground', label: 'Secondary foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="accent"
-              label="Background"
-              title="Accent"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="accentForeground"
-              label="Foreground"
+              items={[
+                { name: 'accent', label: 'Accent background' },
+                { name: 'accentForeground', label: 'Accent foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="muted"
-              label="Background"
-              title="Muted"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="mutedForeground"
-              label="Foreground"
+              items={[
+                { name: 'muted', label: 'Muted background' },
+                { name: 'mutedForeground', label: 'Muted foreground' },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
+          <div className="flex flex-1">
+            <ThemeFormDuoField
               control={form.control}
-              name="destructive"
-              label="Background"
-              title="Destructive"
-            />
-            <ThemeFormField
-              control={form.control}
-              name="cardForeground"
-              label="Foreground"
-            />
-          </div>
-          <div className="flex grow">
-            <ThemeFormField
-              control={form.control}
-              name="border"
-              label="Border"
-              title="Border"
+              items={[
+                { name: 'destructive', label: 'Destructive background' },
+                {
+                  name: 'destructiveForeground',
+                  label: 'Destructive foreground',
+                },
+              ]}
             />
           </div>
-          <div className="flex grow">
-            <ThemeFormField
-              control={form.control}
-              name="ring"
-              label="Ring"
-              title="Ring"
-            />
-          </div>
-          <div className="flex grow">
-            <ThemeFormField
-              control={form.control}
-              name="input"
-              label="Input"
-              title="Input"
-            />
+          <div className="relative flex flex-[3]">
+            <div className="flex h-full w-full flex-col space-y-2">
+              <div className="flex-1">
+                <ThemeFormField
+                  control={form.control}
+                  name="border"
+                  label="Border"
+                  className="w-1/2 rounded-xl border hover:w-2/3"
+                />
+              </div>
+              <div className="flex-1">
+                <ThemeFormField
+                  control={form.control}
+                  name="ring"
+                  label="Ring"
+                  className="w-1/2 rounded-xl border hover:w-2/3"
+                />
+              </div>
+              <div className="flex-1">
+                <ThemeFormField
+                  control={form.control}
+                  name="input"
+                  label="Input"
+                  className="w-1/2 rounded-xl border hover:w-2/3"
+                />
+              </div>
+            </div>
+            <div className="absolute bottom-0 right-0 flex h-full w-fit flex-col-reverse space-y-2">
+              <Button
+                type="button"
+                className="rounded-full"
+                variant="ghost"
+                size="icon"
+                onClick={resetTheme}
+              >
+                <RotateCcw />
+              </Button>
+              <ThemeModeSwitch />
+            </div>
           </div>
         </form>
       </Form>

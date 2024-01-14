@@ -20,7 +20,12 @@ const ThemeModeSwitch: React.FunctionComponent = () => {
   };
 
   return (
-    <Button variant="ghost" size="icon" onClick={handleSwitchTheme}>
+    <Button
+      type="button"
+      variant="ghost"
+      size="icon"
+      onClick={handleSwitchTheme}
+    >
       {theme === 'dark' ? <Moon /> : <Sun />}
     </Button>
   );
