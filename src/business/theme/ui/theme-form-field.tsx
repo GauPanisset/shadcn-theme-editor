@@ -74,7 +74,7 @@ const ThemeFormField = <Values extends FieldValues, Name extends Path<Values>>({
             </FormControl>
             <FormLabel
               className={cn(
-                'pointer-events-none absolute bottom-0 left-0 w-full truncate p-1 text-xs text-foreground',
+                'pointer-events-none absolute bottom-0 left-1 w-full truncate p-1 text-xs text-foreground',
                 textColorVariants({
                   color: currentTextColorVariant,
                 })

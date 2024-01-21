@@ -12,6 +12,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/technical/ui/dialog';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/technical/ui/tooltip';
 
 import { themeCodeWrapperId } from '../services/make-theme-code';
 import { useTheme } from '../services/use-theme';
@@ -22,16 +28,25 @@ const ThemeCodePreview: React.FunctionComponent = () => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button
-          type="button"
-          className="rounded-full"
-          variant="ghost"
-          size="icon"
-        >
-          <Download />
-        </Button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button
+                type="button"
+                className="rounded-full"
+                variant="ghost"
+                size="icon"
+              >
+                <Download />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Copy code</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <DialogContent className="max-w-2xl outline-none">
         <DialogHeader className="font-mono">
           <DialogTitle>Theme</DialogTitle>
@@ -87,7 +102,9 @@ const ThemeCodePreview: React.FunctionComponent = () => {
               &nbsp;&nbsp;&nbsp;&nbsp;--input: {themes.light['input']};
             </span>
             <span>&nbsp;&nbsp;&nbsp;&nbsp;--ring: {themes.light['ring']};</span>
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;--radius: 1rem;</span>
+            <span>
+              &nbsp;&nbsp;&nbsp;&nbsp;--radius: {themes.borderRadius}rem;
+            </span>
             <span>&nbsp;&nbsp;&#125;</span>
             <span>&nbsp;&nbsp;.dark &#123;</span>
             <span>

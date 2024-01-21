@@ -1,29 +1,29 @@
-import { FieldKeys } from '../model/schema';
+import { ColorKeys, ShapeKeys } from '../model/schema';
 import { Theme } from '../model/type';
 
-const themeVariables: Record<
-  (typeof FieldKeys)[keyof typeof FieldKeys],
+const themeColorsVariables: Record<
+  (typeof ColorKeys)[keyof typeof ColorKeys],
   `--${string}`
 > = {
-  [FieldKeys.Foreground]: '--foreground',
-  [FieldKeys.Background]: '--background',
-  [FieldKeys.Card]: '--card',
-  [FieldKeys.CardForeground]: '--card-foreground',
-  [FieldKeys.Popover]: '--popover',
-  [FieldKeys.PopoverForeground]: '--popover-foreground',
-  [FieldKeys.Primary]: '--primary',
-  [FieldKeys.PrimaryForeground]: '--primary-foreground',
-  [FieldKeys.Secondary]: '--secondary',
-  [FieldKeys.SecondaryForeground]: '--secondary-foreground',
-  [FieldKeys.Muted]: '--muted',
-  [FieldKeys.MutedForeground]: '--muted-foreground',
-  [FieldKeys.Accent]: '--accent',
-  [FieldKeys.AccentForeground]: '--accent-foreground',
-  [FieldKeys.Destructive]: '--destructive',
-  [FieldKeys.DestructiveForeground]: '--destructive-foreground',
-  [FieldKeys.Border]: '--border',
-  [FieldKeys.Input]: '--input',
-  [FieldKeys.Ring]: '--ring',
+  [ColorKeys.Foreground]: '--foreground',
+  [ColorKeys.Background]: '--background',
+  [ColorKeys.Card]: '--card',
+  [ColorKeys.CardForeground]: '--card-foreground',
+  [ColorKeys.Popover]: '--popover',
+  [ColorKeys.PopoverForeground]: '--popover-foreground',
+  [ColorKeys.Primary]: '--primary',
+  [ColorKeys.PrimaryForeground]: '--primary-foreground',
+  [ColorKeys.Secondary]: '--secondary',
+  [ColorKeys.SecondaryForeground]: '--secondary-foreground',
+  [ColorKeys.Muted]: '--muted',
+  [ColorKeys.MutedForeground]: '--muted-foreground',
+  [ColorKeys.Accent]: '--accent',
+  [ColorKeys.AccentForeground]: '--accent-foreground',
+  [ColorKeys.Destructive]: '--destructive',
+  [ColorKeys.DestructiveForeground]: '--destructive-foreground',
+  [ColorKeys.Border]: '--border',
+  [ColorKeys.Input]: '--input',
+  [ColorKeys.Ring]: '--ring',
 };
 
 const setThemeInCss = (theme: Theme) => {
@@ -31,11 +31,21 @@ const setThemeInCss = (theme: Theme) => {
     return;
   }
 
-  for (const fieldKey of Object.values(FieldKeys)) {
+  for (const colorKey of Object.values(ColorKeys)) {
     document
       ?.getElementById('demo-wrapper')
-      ?.style.setProperty(themeVariables[fieldKey], theme[fieldKey]);
+      ?.style.setProperty(
+        themeColorsVariables[colorKey],
+        theme.colors[colorKey]
+      );
   }
+
+  document
+    ?.getElementById('demo-wrapper')
+    ?.style.setProperty(
+      '--radius',
+      `${String(theme.shape[ShapeKeys.BorderRadius])}rem`
+    );
 };
 
 export { setThemeInCss };

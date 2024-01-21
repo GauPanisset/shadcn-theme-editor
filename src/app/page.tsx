@@ -19,7 +19,7 @@ const HomePage = () => {
   return (
     <div className="flex h-full">
       <div className="flex h-full w-96 flex-col border-r font-mono">
-        <CardHeader>
+        <CardHeader className="pb-2">
           <CardTitle>Palette</CardTitle>
           <CardDescription>
             Choose the colors to build your theme

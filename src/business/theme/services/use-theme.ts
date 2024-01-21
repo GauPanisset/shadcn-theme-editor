@@ -8,8 +8,9 @@ import { Theme } from '../model/type';
 import { setThemeInCss } from './set-theme-in-css';
 
 const themesAtom = atomWithStorage<{
-  dark: Theme;
-  light: Theme;
+  dark: Theme['colors'];
+  light: Theme['colors'];
+  borderRadius: Theme['shape']['borderRadius'];
 }>('themes', {
   dark: {
     background: '222.2 84% 4.9%',
@@ -53,6 +54,7 @@ const themesAtom = atomWithStorage<{
     input: '214.3 31.8% 91.4%',
     ring: '222.2 84% 4.9%',
   },
+  borderRadius: 1,
 });
 
 const assertThemeMode = (
@@ -69,15 +71,15 @@ const assertThemeMode = (
   return maybeThemeMode;
 };
 
-const translateThemeFromHslToHex = (theme: Theme) =>
+const translateThemeColorsFromHslToHex = (theme: Theme['colors']) =>
   Object.fromEntries(
     Object.entries(theme).map(([themeKey, hslColor]) => [
       themeKey,
       color(`hsl(${hslColor})`).hex(),
     ])
-  ) as Theme;
+  ) as Theme['colors'];
 
-const translateThemeFromHexToHsl = (theme: Theme) =>
+const translateThemeColorsFromHexToHsl = (theme: Theme['colors']) =>
   Object.fromEntries(
     Object.entries(theme).map(([themeKey, hexColor]) => [
       themeKey,
@@ -90,7 +92,7 @@ const translateThemeFromHexToHsl = (theme: Theme) =>
         )
         .join(' '),
     ])
-  ) as Theme;
+  ) as Theme['colors'];
 
 const useTheme = () => {
   const [themes, setThemes] = useAtom(themesAtom);
@@ -99,22 +101,33 @@ const useTheme = () => {
   const currentThemeMode = assertThemeMode(themeMode, systemTheme);
   const currentHslTheme = themes[currentThemeMode];
 
-  useEffect(() => {
-    setThemeInCss(currentHslTheme);
+  const colors = useMemo(() => {
+    return translateThemeColorsFromHslToHex(currentHslTheme);
   }, [currentHslTheme]);
 
-  const theme = useMemo(() => {
-    return translateThemeFromHslToHex(currentHslTheme);
-  }, [currentHslTheme]);
+  const shape = useMemo(() => {
+    return { borderRadius: themes.borderRadius };
+  }, [themes]);
+
+  useEffect(() => {
+    setThemeInCss({ colors: currentHslTheme, shape });
+  }, [currentHslTheme, shape]);
 
   const updateTheme = (newTheme: Theme) => {
     setThemes((currentTheme) => ({
       ...currentTheme,
-      [currentThemeMode]: translateThemeFromHexToHsl(newTheme),
+      [currentThemeMode]: translateThemeColorsFromHexToHsl(newTheme['colors']),
+      borderRadius: newTheme.shape.borderRadius,
     }));
   };
 
-  return { theme, themes, resetTheme: () => setThemes(RESET), updateTheme };
+  return {
+    colors,
+    shape,
+    themes,
+    resetTheme: () => setThemes(RESET),
+    updateTheme,
+  };
 };
 
 export { useTheme };

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const FieldKeys = {
+const ColorKeys = {
   Foreground: 'foreground',
   Background: 'background',
   Card: 'card',
@@ -22,26 +22,38 @@ const FieldKeys = {
   Ring: 'ring',
 } as const;
 
+const ShapeKeys = {
+  BorderRadius: 'borderRadius',
+} as const;
+
 const themeSchema = z.object({
-  [FieldKeys.Foreground]: z.string(),
-  [FieldKeys.Background]: z.string(),
-  [FieldKeys.Card]: z.string(),
-  [FieldKeys.CardForeground]: z.string(),
-  [FieldKeys.Popover]: z.string(),
-  [FieldKeys.PopoverForeground]: z.string(),
-  [FieldKeys.Primary]: z.string(),
-  [FieldKeys.PrimaryForeground]: z.string(),
-  [FieldKeys.Secondary]: z.string(),
-  [FieldKeys.SecondaryForeground]: z.string(),
-  [FieldKeys.Muted]: z.string(),
-  [FieldKeys.MutedForeground]: z.string(),
-  [FieldKeys.Accent]: z.string(),
-  [FieldKeys.AccentForeground]: z.string(),
-  [FieldKeys.Destructive]: z.string(),
-  [FieldKeys.DestructiveForeground]: z.string(),
-  [FieldKeys.Border]: z.string(),
-  [FieldKeys.Input]: z.string(),
-  [FieldKeys.Ring]: z.string(),
+  colors: z.object({
+    [ColorKeys.Foreground]: z.string(),
+    [ColorKeys.Background]: z.string(),
+    [ColorKeys.Card]: z.string(),
+    [ColorKeys.CardForeground]: z.string(),
+    [ColorKeys.Popover]: z.string(),
+    [ColorKeys.PopoverForeground]: z.string(),
+    [ColorKeys.Primary]: z.string(),
+    [ColorKeys.PrimaryForeground]: z.string(),
+    [ColorKeys.Secondary]: z.string(),
+    [ColorKeys.SecondaryForeground]: z.string(),
+    [ColorKeys.Muted]: z.string(),
+    [ColorKeys.MutedForeground]: z.string(),
+    [ColorKeys.Accent]: z.string(),
+    [ColorKeys.AccentForeground]: z.string(),
+    [ColorKeys.Destructive]: z.string(),
+    [ColorKeys.DestructiveForeground]: z.string(),
+    [ColorKeys.Border]: z.string(),
+    [ColorKeys.Input]: z.string(),
+    [ColorKeys.Ring]: z.string(),
+  }),
+  shape: z.object({
+    [ShapeKeys.BorderRadius]: z.preprocess(
+      (x: unknown) => parseFloat(String(x)),
+      z.number()
+    ),
+  }),
 });
 
-export { FieldKeys, themeSchema };
+export { ColorKeys, ShapeKeys, themeSchema };

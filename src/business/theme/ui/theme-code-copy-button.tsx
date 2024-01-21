@@ -5,7 +5,7 @@ import { Button } from '@/technical/ui/button';
 
 import { makeThemeCode } from '../services/make-theme-code';
 
-const ThemeCodeCopyButton = () => {
+const ThemeCodeCopyButton: React.FunctionComponent = () => {
   const [hasCopied, setHasCopied] = useState(false);
 
   useEffect(() => {
