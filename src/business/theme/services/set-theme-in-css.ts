@@ -1,51 +1,47 @@
-import { ColorKeys, ShapeKeys } from '../model/schema';
-import { Theme } from '../model/type';
+import { ColorsTheme, Theme } from '../model/type';
 
-const themeColorsVariables: Record<
-  (typeof ColorKeys)[keyof typeof ColorKeys],
-  `--${string}`
-> = {
-  [ColorKeys.Foreground]: '--foreground',
-  [ColorKeys.Background]: '--background',
-  [ColorKeys.Card]: '--card',
-  [ColorKeys.CardForeground]: '--card-foreground',
-  [ColorKeys.Popover]: '--popover',
-  [ColorKeys.PopoverForeground]: '--popover-foreground',
-  [ColorKeys.Primary]: '--primary',
-  [ColorKeys.PrimaryForeground]: '--primary-foreground',
-  [ColorKeys.Secondary]: '--secondary',
-  [ColorKeys.SecondaryForeground]: '--secondary-foreground',
-  [ColorKeys.Muted]: '--muted',
-  [ColorKeys.MutedForeground]: '--muted-foreground',
-  [ColorKeys.Accent]: '--accent',
-  [ColorKeys.AccentForeground]: '--accent-foreground',
-  [ColorKeys.Destructive]: '--destructive',
-  [ColorKeys.DestructiveForeground]: '--destructive-foreground',
-  [ColorKeys.Border]: '--border',
-  [ColorKeys.Input]: '--input',
-  [ColorKeys.Ring]: '--ring',
+const colorsThemeVariables: Record<keyof ColorsTheme, `--${string}`> = {
+  foreground: '--foreground',
+  background: '--background',
+  card: '--card',
+  cardForeground: '--card-foreground',
+  popover: '--popover',
+  popoverForeground: '--popover-foreground',
+  primary: '--primary',
+  primaryForeground: '--primary-foreground',
+  secondary: '--secondary',
+  secondaryForeground: '--secondary-foreground',
+  muted: '--muted',
+  mutedForeground: '--muted-foreground',
+  accent: '--accent',
+  accentForeground: '--accent-foreground',
+  destructive: '--destructive',
+  destructiveForeground: '--destructive-foreground',
+  border: '--border',
+  input: '--input',
+  ring: '--ring',
 };
 
-const setThemeInCss = (theme: Theme) => {
+const setThemeInCss = (theme: {
+  colors: ColorsTheme;
+  shape: { borderRadius: Theme['borderRadius'] };
+}) => {
   if (typeof window === 'undefined') {
     return;
   }
 
-  for (const colorKey of Object.values(ColorKeys)) {
+  for (const colorKey in colorsThemeVariables) {
     document
       ?.getElementById('demo-wrapper')
       ?.style.setProperty(
-        themeColorsVariables[colorKey],
-        theme.colors[colorKey]
+        colorsThemeVariables[colorKey as keyof ColorsTheme],
+        theme.colors[colorKey as keyof ColorsTheme]
       );
   }
 
   document
     ?.getElementById('demo-wrapper')
-    ?.style.setProperty(
-      '--radius',
-      `${String(theme.shape[ShapeKeys.BorderRadius])}rem`
-    );
+    ?.style.setProperty('--radius', `${String(theme.shape.borderRadius)}rem`);
 };
 
 export { setThemeInCss };

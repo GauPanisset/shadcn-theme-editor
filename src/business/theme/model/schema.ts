@@ -1,59 +1,36 @@
 import { z } from 'zod';
 
-const ColorKeys = {
-  Foreground: 'foreground',
-  Background: 'background',
-  Card: 'card',
-  CardForeground: 'cardForeground',
-  Popover: 'popover',
-  PopoverForeground: 'popoverForeground',
-  Primary: 'primary',
-  PrimaryForeground: 'primaryForeground',
-  Secondary: 'secondary',
-  SecondaryForeground: 'secondaryForeground',
-  Muted: 'muted',
-  MutedForeground: 'mutedForeground',
-  Accent: 'accent',
-  AccentForeground: 'accentForeground',
-  Destructive: 'destructive',
-  DestructiveForeground: 'destructiveForeground',
-  Border: 'border',
-  Input: 'input',
-  Ring: 'ring',
-} as const;
-
-const ShapeKeys = {
-  BorderRadius: 'borderRadius',
-} as const;
-
-const themeSchema = z.object({
+import { ThemeFormData } from './type';
+const themeFormSchema = z.object({
   colors: z.object({
-    [ColorKeys.Foreground]: z.string(),
-    [ColorKeys.Background]: z.string(),
-    [ColorKeys.Card]: z.string(),
-    [ColorKeys.CardForeground]: z.string(),
-    [ColorKeys.Popover]: z.string(),
-    [ColorKeys.PopoverForeground]: z.string(),
-    [ColorKeys.Primary]: z.string(),
-    [ColorKeys.PrimaryForeground]: z.string(),
-    [ColorKeys.Secondary]: z.string(),
-    [ColorKeys.SecondaryForeground]: z.string(),
-    [ColorKeys.Muted]: z.string(),
-    [ColorKeys.MutedForeground]: z.string(),
-    [ColorKeys.Accent]: z.string(),
-    [ColorKeys.AccentForeground]: z.string(),
-    [ColorKeys.Destructive]: z.string(),
-    [ColorKeys.DestructiveForeground]: z.string(),
-    [ColorKeys.Border]: z.string(),
-    [ColorKeys.Input]: z.string(),
-    [ColorKeys.Ring]: z.string(),
+    foreground: z.string(),
+    background: z.string(),
+    card: z.string(),
+    cardForeground: z.string(),
+    popover: z.string(),
+    popoverForeground: z.string(),
+    primary: z.string(),
+    primaryForeground: z.string(),
+    secondary: z.string(),
+    secondaryForeground: z.string(),
+    muted: z.string(),
+    mutedForeground: z.string(),
+    accent: z.string(),
+    accentForeground: z.string(),
+    destructive: z.string(),
+    destructiveForeground: z.string(),
+    border: z.string(),
+    input: z.string(),
+    ring: z.string(),
   }),
   shape: z.object({
-    [ShapeKeys.BorderRadius]: z.preprocess(
-      (x: unknown) => parseFloat(String(x)),
-      z.number()
-    ),
+    borderRadius: z.number(),
   }),
-});
+  /**
+   * This `satisfies` actually does not check if the schema contains more keys than the type.
+   * But it is the best solution so far since it just does not feel natural to define
+   * the Theme type from the schema.
+   */
+}) satisfies z.ZodType<ThemeFormData>;
 
-export { ColorKeys, ShapeKeys, themeSchema };
+export { themeFormSchema };

@@ -1,6 +1,6 @@
 'use client';
 
-import { Download } from 'lucide-react';
+import { Copy } from 'lucide-react';
 import { Fragment } from 'react';
 
 import { Button } from '@/technical/ui/button';
@@ -24,7 +24,7 @@ import { useTheme } from '../services/use-theme';
 import { ThemeCodeCopyButton } from './theme-code-copy-button';
 
 const ThemeCodePreview: React.FunctionComponent = () => {
-  const { themes } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <Dialog>
@@ -38,7 +38,7 @@ const ThemeCodePreview: React.FunctionComponent = () => {
                 variant="ghost"
                 size="icon"
               >
-                <Download />
+                <Copy />
               </Button>
             </DialogTrigger>
           </TooltipTrigger>
@@ -63,12 +63,10 @@ const ThemeCodePreview: React.FunctionComponent = () => {
             <span>@layer base &#123;</span>
             <span>&nbsp;&nbsp;:root &#123;</span>
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--background: {themes.light['background']}
-              ;
+              &nbsp;&nbsp;&nbsp;&nbsp;--background: {theme.light['background']};
             </span>
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--foreground: {themes.light['foreground']}
-              ;
+              &nbsp;&nbsp;&nbsp;&nbsp;--foreground: {theme.light['foreground']};
             </span>
             {[
               'card',
@@ -82,13 +80,13 @@ const ThemeCodePreview: React.FunctionComponent = () => {
               <Fragment key={prefix}>
                 <span>
                   &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}:{' '}
-                  {themes.light[prefix as keyof typeof themes.light]};
+                  {theme.light[prefix as keyof typeof theme.light]};
                 </span>
                 <span>
                   &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}-foreground:{' '}
                   {
-                    themes.light[
-                      `${prefix}Foreground` as keyof typeof themes.light
+                    theme.light[
+                      `${prefix}Foreground` as keyof typeof theme.light
                     ]
                   }
                   ;
@@ -96,22 +94,22 @@ const ThemeCodePreview: React.FunctionComponent = () => {
               </Fragment>
             ))}
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--border: {themes.light['border']};
+              &nbsp;&nbsp;&nbsp;&nbsp;--border: {theme.light['border']};
             </span>
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--input: {themes.light['input']};
+              &nbsp;&nbsp;&nbsp;&nbsp;--input: {theme.light['input']};
             </span>
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;--ring: {themes.light['ring']};</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;--ring: {theme.light['ring']};</span>
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--radius: {themes.borderRadius}rem;
+              &nbsp;&nbsp;&nbsp;&nbsp;--radius: {theme.borderRadius}rem;
             </span>
             <span>&nbsp;&nbsp;&#125;</span>
             <span>&nbsp;&nbsp;.dark &#123;</span>
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--background: {themes.dark['background']};
+              &nbsp;&nbsp;&nbsp;&nbsp;--background: {theme.dark['background']};
             </span>
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--foreground: {themes.dark['foreground']};
+              &nbsp;&nbsp;&nbsp;&nbsp;--foreground: {theme.dark['foreground']};
             </span>
             {[
               'card',
@@ -125,26 +123,20 @@ const ThemeCodePreview: React.FunctionComponent = () => {
               <Fragment key={prefix}>
                 <span>
                   &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}:{' '}
-                  {themes.dark[prefix as keyof typeof themes.dark]};
+                  {theme.dark[prefix as keyof typeof theme.dark]};
                 </span>
                 <span>
                   &nbsp;&nbsp;&nbsp;&nbsp;--{prefix}-foreground:{' '}
-                  {
-                    themes.dark[
-                      `${prefix}Foreground` as keyof typeof themes.dark
-                    ]
-                  }
+                  {theme.dark[`${prefix}Foreground` as keyof typeof theme.dark]}
                   ;
                 </span>
               </Fragment>
             ))}
             <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--border: {themes.dark['border']};
+              &nbsp;&nbsp;&nbsp;&nbsp;--border: {theme.dark['border']};
             </span>
-            <span>
-              &nbsp;&nbsp;&nbsp;&nbsp;--input: {themes.dark['input']};
-            </span>
-            <span>&nbsp;&nbsp;&nbsp;&nbsp;--ring: {themes.dark['ring']};</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;--input: {theme.dark['input']};</span>
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;--ring: {theme.dark['ring']};</span>
             <span>&nbsp;&nbsp;&#125;</span>
             <span>&#125;</span>
           </code>

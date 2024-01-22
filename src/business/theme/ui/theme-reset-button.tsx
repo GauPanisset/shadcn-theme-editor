@@ -1,4 +1,4 @@
-import { RotateCcw } from 'lucide-react';
+import { Undo2 } from 'lucide-react';
 
 import { Button } from '@/technical/ui/button';
 import {
@@ -24,7 +24,7 @@ const ThemeResetButton: React.FunctionComponent = () => {
             size="icon"
             onClick={resetTheme}
           >
-            <RotateCcw />
+            <Undo2 />
           </Button>
         </TooltipTrigger>
         <TooltipContent>Reset theme</TooltipContent>

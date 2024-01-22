@@ -1,20 +1,17 @@
-import color from 'color';
 import { useAtom } from 'jotai';
 import { atomWithStorage, RESET } from 'jotai/utils';
 import { useTheme as useThemeMode } from 'next-themes';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
-import { Theme } from '../model/type';
+import { DeepPartial } from '@/technical/typescript/deep-partial';
+
+import { ColorsTheme, Theme } from '../model/type';
 import { setThemeInCss } from './set-theme-in-css';
 
-const themesAtom = atomWithStorage<{
-  dark: Theme['colors'];
-  light: Theme['colors'];
-  borderRadius: Theme['shape']['borderRadius'];
-}>('themes', {
+const themeAtom = atomWithStorage<Theme>('theme', {
   dark: {
     background: '222.2 84% 4.9%',
-    foreground: ' 210 40% 98%',
+    foreground: '210 40% 98%',
     card: '222.2 84% 4.9%',
     cardForeground: ' 210 40% 98%',
     popover: '222.2 84% 4.9%',
@@ -28,7 +25,7 @@ const themesAtom = atomWithStorage<{
     accent: '217.2 32.6% 17.5%',
     accentForeground: '210 40% 98%',
     destructive: '0 62.8% 30.6%',
-    destructiveForeground: ' 210 40% 98%',
+    destructiveForeground: '210 40% 98%',
     border: '217.2 32.6% 17.5%',
     input: '217.2 32.6% 17.5%',
     ring: '212.7 26.8% 83.9%',
@@ -71,61 +68,68 @@ const assertThemeMode = (
   return maybeThemeMode;
 };
 
-const translateThemeColorsFromHslToHex = (theme: Theme['colors']) =>
-  Object.fromEntries(
-    Object.entries(theme).map(([themeKey, hslColor]) => [
-      themeKey,
-      color(`hsl(${hslColor})`).hex(),
-    ])
-  ) as Theme['colors'];
-
-const translateThemeColorsFromHexToHsl = (theme: Theme['colors']) =>
-  Object.fromEntries(
-    Object.entries(theme).map(([themeKey, hexColor]) => [
-      themeKey,
-      color(hexColor)
-        .hsl()
-        .array()
-        .map(
-          (value, index) =>
-            `${Math.round(value * 100) / 100}${index > 0 ? '%' : ''}`
-        )
-        .join(' '),
-    ])
-  ) as Theme['colors'];
-
 const useTheme = () => {
-  const [themes, setThemes] = useAtom(themesAtom);
+  const [theme, setTheme] = useAtom(themeAtom);
 
   const { theme: themeMode, systemTheme } = useThemeMode();
   const currentThemeMode = assertThemeMode(themeMode, systemTheme);
-  const currentHslTheme = themes[currentThemeMode];
-
-  const colors = useMemo(() => {
-    return translateThemeColorsFromHslToHex(currentHslTheme);
-  }, [currentHslTheme]);
-
-  const shape = useMemo(() => {
-    return { borderRadius: themes.borderRadius };
-  }, [themes]);
+  const currentThemeColors = theme[currentThemeMode];
+  const currentBorderRadius = theme.borderRadius;
 
   useEffect(() => {
-    setThemeInCss({ colors: currentHslTheme, shape });
-  }, [currentHslTheme, shape]);
+    setThemeInCss({
+      colors: currentThemeColors,
+      shape: { borderRadius: currentBorderRadius },
+    });
+  }, [currentThemeColors, currentBorderRadius]);
 
-  const updateTheme = (newTheme: Theme) => {
-    setThemes((currentTheme) => ({
+  const updateBorderRadius = (borderRadius: Theme['borderRadius']) => {
+    setTheme((currentTheme) => ({
       ...currentTheme,
-      [currentThemeMode]: translateThemeColorsFromHexToHsl(newTheme['colors']),
-      borderRadius: newTheme.shape.borderRadius,
+      borderRadius: borderRadius,
+    }));
+  };
+
+  const updateColors = (
+    colors: Partial<ColorsTheme>,
+    themeMode: 'dark' | 'light' = currentThemeMode
+  ) => {
+    setTheme((currentTheme) => ({
+      ...currentTheme,
+      [themeMode]: {
+        ...currentTheme[themeMode],
+        ...colors,
+      },
+    }));
+  };
+
+  const updateTheme = (theme: DeepPartial<Theme>) => {
+    setTheme((currentTheme) => ({
+      ...currentTheme,
+      ...(theme.borderRadius !== undefined && {
+        borderRadius: theme.borderRadius,
+      }),
+      ...(theme.dark !== undefined && {
+        dark: {
+          ...currentTheme.dark,
+          ...theme.dark,
+        },
+      }),
+      ...(theme.light !== undefined && {
+        light: {
+          ...currentTheme.light,
+          ...theme.light,
+        },
+      }),
     }));
   };
 
   return {
-    colors,
-    shape,
-    themes,
-    resetTheme: () => setThemes(RESET),
+    theme,
+    themeMode: currentThemeMode,
+    resetTheme: () => setTheme(RESET),
+    updateBorderRadius,
+    updateColors,
     updateTheme,
   };
 };

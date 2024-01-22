@@ -7,32 +7,44 @@ import { useForm } from 'react-hook-form';
 import { Form } from '@/technical/ui/form';
 import { Separator } from '@/technical/ui/separator';
 
-import { themeSchema } from '../model/schema';
-import { Theme } from '../model/type';
+import { themeFormSchema } from '../model/schema';
+import { ThemeFormData } from '../model/type';
+import {
+  translateColorsThemeFromHexToHsl,
+  translateColorsThemeFromHslToHex,
+} from '../services/translate-theme-colors';
 import { useTheme } from '../services/use-theme';
 import { ThemeCodePreview } from './theme-code-preview';
 import { ThemeFormDuoField } from './theme-form-duo-field';
 import { ThemeFormField } from './theme-form-field';
 import { ThemeFormNumberField } from './theme-form-number-field';
 import { ThemeModeSwitch } from './theme-mode-switch';
+import { ThemePresetMenu } from './theme-preset-menu';
 import { ThemeResetButton } from './theme-reset-button';
 
 const ThemeForm = () => {
-  const { shape, colors, updateTheme } = useTheme();
+  const { theme, themeMode, updateColors, updateBorderRadius } = useTheme();
 
-  const form = useForm<Theme>({
-    resolver: zodResolver(themeSchema),
-    defaultValues: { colors, shape },
+  const form = useForm<ThemeFormData>({
+    resolver: zodResolver(themeFormSchema),
+    defaultValues: {
+      colors: translateColorsThemeFromHslToHex(theme[themeMode]),
+      shape: { borderRadius: theme.borderRadius },
+    },
     mode: 'onBlur',
   });
 
-  const onSubmit = (values: Theme) => {
-    updateTheme(values);
+  const onSubmit = (values: ThemeFormData) => {
+    updateColors(translateColorsThemeFromHexToHsl(values.colors));
+    updateBorderRadius(values.shape.borderRadius);
   };
 
   useEffect(() => {
-    form.reset({ colors, shape });
-  }, [colors, form, shape]);
+    form.reset({
+      colors: translateColorsThemeFromHslToHex(theme[themeMode]),
+      shape: { borderRadius: theme.borderRadius },
+    });
+  }, [theme, themeMode, form]);
 
   return (
     <>
@@ -47,6 +59,7 @@ const ThemeForm = () => {
           <div className="flex w-fit items-center space-x-2">
             <ThemeResetButton />
             <ThemeCodePreview />
+            <ThemePresetMenu />
             <Separator orientation="vertical" className="h-8" />
             <ThemeModeSwitch />
           </div>

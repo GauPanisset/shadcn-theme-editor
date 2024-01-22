@@ -27,7 +27,7 @@ const ThemeFormNumberField = <
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field: { onChange, ...otherFields } }) => (
         <FormItem className="group relative h-full flex-1 grow space-y-0 pt-2 transition-[width,flex] duration-300">
           <FormLabel className="absolute top-0 max-w-full truncate bg-background px-2 text-xs text-foreground">
             {label}
@@ -39,7 +39,11 @@ const ThemeFormNumberField = <
                 type="number"
                 step="0.1"
                 min="0"
-                {...field}
+                onChange={(event) => {
+                  const floatValue = parseFloat(event.target.value);
+                  onChange(Number.isNaN(floatValue) ? 0 : floatValue);
+                }}
+                {...otherFields}
               />
               <div className="pointer-events-none absolute right-10 top-5 hidden items-center pl-3 group-hover:flex">
                 <span className="text-base sm:text-sm">rem</span>
