@@ -1,4 +1,4 @@
-import { Preset } from '../model/type';
+import { Preset } from './model/type';
 
 const presets: Preset[] = [
   {

@@ -1,5 +1,6 @@
 import { Undo2 } from 'lucide-react';
 
+import { useTheme } from '@/business/theme/services/use-theme';
 import { Button } from '@/technical/ui/button';
 import {
   Tooltip,
@@ -8,9 +9,7 @@ import {
   TooltipTrigger,
 } from '@/technical/ui/tooltip';
 
-import { useTheme } from '../services/use-theme';
-
-const ThemeResetButton: React.FunctionComponent = () => {
+const PaletteResetButton: React.FunctionComponent = () => {
   const { resetTheme } = useTheme();
 
   return (
@@ -33,4 +32,4 @@ const ThemeResetButton: React.FunctionComponent = () => {
   );
 };
 
-export { ThemeResetButton };
+export { PaletteResetButton };

@@ -1,7 +1,7 @@
 'use client';
 
 import { CardsDemo } from '@/business/demo/ui';
-import { ThemeForm } from '@/business/theme/ui/theme-form';
+import { PaletteForm } from '@/business/palette/ui/palette-form';
 import { useHasMounted } from '@/technical/hooks/use-has-mounted';
 import {
   Card,
@@ -26,7 +26,7 @@ const HomePage = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="flex-1">
-          <ThemeForm />
+          <PaletteForm />
         </CardContent>
       </div>
       <div id="demo-wrapper" className="h-full flex-1 overflow-auto p-4">

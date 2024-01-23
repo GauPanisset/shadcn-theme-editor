@@ -1,11 +1,11 @@
 import React from 'react';
 import { Control, FieldValues, Path } from 'react-hook-form';
 
-import { ThemeFormField } from './theme-form-field';
+import { PaletteFormField } from './palette-form-field';
 
 type FieldItem<Values extends FieldValues, Name extends Path<Values>> = {
-  label: React.ComponentProps<typeof ThemeFormField<Values, Name>>['label'];
-  name: React.ComponentProps<typeof ThemeFormField<Values, Name>>['name'];
+  label: React.ComponentProps<typeof PaletteFormField<Values, Name>>['label'];
+  name: React.ComponentProps<typeof PaletteFormField<Values, Name>>['name'];
 };
 
 type Props<Values extends FieldValues, Name extends Path<Values>> = {
@@ -13,7 +13,7 @@ type Props<Values extends FieldValues, Name extends Path<Values>> = {
   items: [FieldItem<Values, Name>, FieldItem<Values, Name>];
 };
 
-const ThemeFormDuoField = <
+const PaletteFormDuoField = <
   Values extends FieldValues,
   Name extends Path<Values>,
 >({
@@ -23,7 +23,7 @@ const ThemeFormDuoField = <
   return (
     <div className="flex h-full w-full overflow-hidden rounded-xl border">
       {items.map((item) => (
-        <ThemeFormField
+        <PaletteFormField
           key={item.name}
           control={control}
           label={item.label}
@@ -35,4 +35,4 @@ const ThemeFormDuoField = <
   );
 };
 
-export { ThemeFormDuoField };
+export { PaletteFormDuoField };

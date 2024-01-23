@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
-import { ThemeFormData } from './type';
-const themeFormSchema = z.object({
+import { PaletteFormData } from './type';
+
+const paletteFormSchema = z.object({
   colors: z.object({
     foreground: z.string(),
     background: z.string(),
@@ -31,6 +32,6 @@ const themeFormSchema = z.object({
    * But it is the best solution so far since it just does not feel natural to define
    * the Theme type from the schema.
    */
-}) satisfies z.ZodType<ThemeFormData>;
+}) satisfies z.ZodType<PaletteFormData>;
 
-export { themeFormSchema };
+export { paletteFormSchema };

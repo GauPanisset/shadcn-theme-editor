@@ -15,7 +15,7 @@ type Props<Values extends FieldValues, Name extends Path<Values>> = {
   name: Name;
 };
 
-const ThemeFormNumberField = <
+const PaletteFormNumberField = <
   Values extends FieldValues,
   Name extends Path<Values>,
 >({
@@ -57,4 +57,4 @@ const ThemeFormNumberField = <
   );
 };
 
-export { ThemeFormNumberField };
+export { PaletteFormNumberField };

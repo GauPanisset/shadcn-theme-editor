@@ -20,25 +20,10 @@ type ColorsTheme = {
   ring: string;
 };
 
-type Preset = {
-  name: string;
-  label: string;
-  activeColor: {
-    light: string;
-    dark: string;
-  };
-  theme: Omit<Theme, 'borderRadius'> & Partial<Pick<Theme, 'borderRadius'>>;
-};
-
 type Theme = {
   dark: ColorsTheme;
   light: ColorsTheme;
   borderRadius: number;
 };
 
-type ThemeFormData = {
-  colors: ColorsTheme;
-  shape: { borderRadius: Theme['borderRadius'] };
-};
-
-export type { ColorsTheme, Preset, Theme, ThemeFormData };
+export type { ColorsTheme, Theme };

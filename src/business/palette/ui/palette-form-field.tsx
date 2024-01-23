@@ -31,7 +31,10 @@ const textColorVariants = cva('', {
   },
 });
 
-const ThemeFormField = <Values extends FieldValues, Name extends Path<Values>>({
+const PaletteFormField = <
+  Values extends FieldValues,
+  Name extends Path<Values>,
+>({
   control,
   label,
   name,
@@ -90,4 +93,4 @@ const ThemeFormField = <Values extends FieldValues, Name extends Path<Values>>({
   );
 };
 
-export { ThemeFormField };
+export { PaletteFormField };

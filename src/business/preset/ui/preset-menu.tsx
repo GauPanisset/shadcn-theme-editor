@@ -1,5 +1,6 @@
 import { Palette } from 'lucide-react';
 
+import { useTheme } from '@/business/theme/services/use-theme';
 import { Button } from '@/technical/ui/button';
 import { cn } from '@/technical/ui/helpers';
 import {
@@ -14,10 +15,9 @@ import {
   TooltipTrigger,
 } from '@/technical/ui/tooltip';
 
-import { presets } from '../assets/shadcn-theme-presets';
-import { useTheme } from '../services/use-theme';
+import { presets } from '../shadcn-theme-presets';
 
-const ThemePresetMenu: React.FunctionComponent = () => {
+const PresetMenu: React.FunctionComponent = () => {
   const { themeMode, updateTheme } = useTheme();
 
   return (
@@ -72,4 +72,4 @@ const ThemePresetMenu: React.FunctionComponent = () => {
   );
 };
 
-export { ThemePresetMenu };
+export { PresetMenu };
