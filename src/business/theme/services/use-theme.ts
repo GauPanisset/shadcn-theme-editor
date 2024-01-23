@@ -8,7 +8,7 @@ import { DeepPartial } from '@/technical/typescript/deep-partial';
 import { ColorsTheme, Theme } from '../model/type';
 import { setThemeInCss } from './set-theme-in-css';
 
-const themeAtom = atomWithStorage<Theme>('theme', {
+const themeAtom = atomWithStorage<Theme>('theme-store', {
   dark: {
     background: '222.2 84% 4.9%',
     foreground: '210 40% 98%',
