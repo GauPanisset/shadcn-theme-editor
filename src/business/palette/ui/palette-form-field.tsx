@@ -53,7 +53,7 @@ const PaletteFormField = <
         return (
           <FormItem
             className={cn(
-              'group relative h-full grow overflow-hidden transition-[width,flex] duration-300',
+              'group relative h-full grow overflow-hidden ring-ring ring-offset-2 ring-offset-background transition-[width,flex] duration-300 focus-within:z-10 focus-within:ring-2',
               className
             )}
           >

@@ -161,7 +161,7 @@ export const columns: ColumnDef<Payment>[] = [
               <DotsHorizontalIcon className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent disablePortal={true} align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
@@ -225,7 +225,7 @@ const CardsDataTable = () => {
                 Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent disablePortal={true} align="end">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())

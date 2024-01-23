@@ -53,7 +53,7 @@ const CardsTeamMembers = () => {
                 <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0" align="end">
+            <PopoverContent disablePortal={true} className="p-0" align="end">
               <Command>
                 <CommandInput placeholder="Select new role..." />
                 <CommandList>
@@ -107,7 +107,7 @@ const CardsTeamMembers = () => {
                 <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0" align="end">
+            <PopoverContent disablePortal={true} className="p-0" align="end">
               <Command>
                 <CommandInput placeholder="Select new role..." />
                 <CommandList>
@@ -163,7 +163,7 @@ const CardsTeamMembers = () => {
                 <ChevronDownIcon className="ml-2 h-4 w-4 text-muted-foreground" />
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="p-0" align="end">
+            <PopoverContent disablePortal={true} className="p-0" align="end">
               <Command>
                 <CommandInput placeholder="Select new role..." />
                 <CommandList>

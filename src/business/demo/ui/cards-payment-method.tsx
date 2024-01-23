@@ -120,7 +120,7 @@ const CardsPaymentMethod = () => {
               <SelectTrigger id="month" aria-label="Month">
                 <SelectValue placeholder="Month" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent disablePortal={true}>
                 <SelectItem value="1">January</SelectItem>
                 <SelectItem value="2">February</SelectItem>
                 <SelectItem value="3">March</SelectItem>
@@ -142,7 +142,7 @@ const CardsPaymentMethod = () => {
               <SelectTrigger id="year" aria-label="Year">
                 <SelectValue placeholder="Year" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent disablePortal={true}>
                 {Array.from({ length: 10 }, (_, i) => (
                   <SelectItem key={i} value={`${new Date().getFullYear() + i}`}>
                     {new Date().getFullYear() + i}

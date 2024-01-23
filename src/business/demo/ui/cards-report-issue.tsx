@@ -41,7 +41,7 @@ const CardsReportIssue = () => {
               <SelectTrigger id={`area-${id}`} aria-label="Area">
                 <SelectValue placeholder="Select" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent disablePortal={true}>
                 <SelectItem value="team">Team</SelectItem>
                 <SelectItem value="billing">Billing</SelectItem>
                 <SelectItem value="account">Account</SelectItem>
@@ -60,7 +60,7 @@ const CardsReportIssue = () => {
               >
                 <SelectValue placeholder="Select level" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent disablePortal={true}>
                 <SelectItem value="1">Severity 1 (Highest)</SelectItem>
                 <SelectItem value="2">Severity 2</SelectItem>
                 <SelectItem value="3">Severity 3</SelectItem>

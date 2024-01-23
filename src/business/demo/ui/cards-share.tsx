@@ -64,7 +64,7 @@ const CardsShare = () => {
                 <SelectTrigger className="ml-auto w-[110px]" aria-label="Edit">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent disablePortal={true}>
                   <SelectItem value="edit">Can edit</SelectItem>
                   <SelectItem value="view">Can view</SelectItem>
                 </SelectContent>
@@ -87,7 +87,7 @@ const CardsShare = () => {
                 <SelectTrigger className="ml-auto w-[110px]" aria-label="Edit">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent disablePortal={true}>
                   <SelectItem value="edit">Can edit</SelectItem>
                   <SelectItem value="view">Can view</SelectItem>
                 </SelectContent>
@@ -110,7 +110,7 @@ const CardsShare = () => {
                 <SelectTrigger className="ml-auto w-[110px]" aria-label="Edit">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent disablePortal={true}>
                   <SelectItem value="edit">Can edit</SelectItem>
                   <SelectItem value="view">Can view</SelectItem>
                 </SelectContent>
