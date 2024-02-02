@@ -12,6 +12,7 @@ import {
 import { useTheme } from '@/business/theme/services/use-theme';
 import { ThemeCodePreview } from '@/business/theme/ui/theme-code-preview';
 import { ThemeModeSwitch } from '@/business/theme/ui/theme-mode-switch';
+import { debounce } from '@/technical/helpers/debounce';
 import { Form } from '@/technical/ui/form';
 import { Separator } from '@/technical/ui/separator';
 
@@ -31,7 +32,7 @@ const PaletteForm = () => {
       colors: translateColorsThemeFromHslToHex(theme[themeMode]),
       shape: { borderRadius: theme.borderRadius },
     },
-    mode: 'onBlur',
+    mode: 'onChange',
   });
 
   const onSubmit = (values: PaletteFormData) => {
@@ -49,11 +50,11 @@ const PaletteForm = () => {
   return (
     <Form {...form}>
       <form
-        onBlur={form.handleSubmit(onSubmit)}
+        onChange={debounce(form.handleSubmit(onSubmit), 300)}
         onSubmit={(event) => {
           event.preventDefault();
         }}
-        className="flex h-full flex-col space-y-2"
+        className="flex h-full flex-col"
       >
         <div className="flex w-fit items-center space-x-2 px-6">
           <PaletteResetButton />
@@ -62,7 +63,7 @@ const PaletteForm = () => {
           <Separator orientation="vertical" className="h-8" />
           <ThemeModeSwitch />
         </div>
-        <div className="flex min-h-0 flex-1 flex-col space-y-2 overflow-auto px-6">
+        <div className="mt-1 flex min-h-0 flex-1 flex-col space-y-2 overflow-auto px-6 py-1">
           <PaletteFormDuoField
             control={form.control}
             items={[

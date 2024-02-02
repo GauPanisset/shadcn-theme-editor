@@ -1,26 +1,5 @@
 import { ColorsTheme, Theme } from '../model/type';
-
-const colorsThemeVariables: Record<keyof ColorsTheme, `--${string}`> = {
-  foreground: '--foreground',
-  background: '--background',
-  card: '--card',
-  cardForeground: '--card-foreground',
-  popover: '--popover',
-  popoverForeground: '--popover-foreground',
-  primary: '--primary',
-  primaryForeground: '--primary-foreground',
-  secondary: '--secondary',
-  secondaryForeground: '--secondary-foreground',
-  muted: '--muted',
-  mutedForeground: '--muted-foreground',
-  accent: '--accent',
-  accentForeground: '--accent-foreground',
-  destructive: '--destructive',
-  destructiveForeground: '--destructive-foreground',
-  border: '--border',
-  input: '--input',
-  ring: '--ring',
-};
+import { setColorInCss } from './set-color-in-css';
 
 const setThemeInCss = (theme: {
   colors: ColorsTheme;
@@ -30,13 +9,11 @@ const setThemeInCss = (theme: {
     return;
   }
 
-  for (const colorKey in colorsThemeVariables) {
-    document
-      ?.getElementById('demo-wrapper')
-      ?.style.setProperty(
-        colorsThemeVariables[colorKey as keyof ColorsTheme],
-        theme.colors[colorKey as keyof ColorsTheme]
-      );
+  for (const colorKey in theme.colors) {
+    setColorInCss(
+      colorKey as keyof ColorsTheme,
+      theme.colors[colorKey as keyof ColorsTheme]
+    );
   }
 
   document

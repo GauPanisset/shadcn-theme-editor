@@ -84,23 +84,20 @@ const useTheme = () => {
   }, [currentThemeColors, currentBorderRadius]);
 
   const updateBorderRadius = (borderRadius: Theme['borderRadius']) => {
-    setTheme((currentTheme) => ({
-      ...currentTheme,
+    updateTheme({
       borderRadius: borderRadius,
-    }));
+    });
   };
 
   const updateColors = (
     colors: Partial<ColorsTheme>,
     themeMode: 'dark' | 'light' = currentThemeMode
   ) => {
-    setTheme((currentTheme) => ({
-      ...currentTheme,
+    updateTheme({
       [themeMode]: {
-        ...currentTheme[themeMode],
         ...colors,
       },
-    }));
+    });
   };
 
   const updateTheme = (theme: DeepPartial<Theme>) => {
