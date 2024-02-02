@@ -55,14 +55,14 @@ const PaletteForm = () => {
         }}
         className="flex h-full flex-col space-y-2"
       >
-        <div className="flex w-fit items-center space-x-2">
+        <div className="flex w-fit items-center space-x-2 px-6">
           <PaletteResetButton />
           <ThemeCodePreview />
           <PresetMenu />
           <Separator orientation="vertical" className="h-8" />
           <ThemeModeSwitch />
         </div>
-        <div className="flex flex-1">
+        <div className="flex min-h-0 flex-1 flex-col space-y-2 overflow-auto px-6">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -70,8 +70,6 @@ const PaletteForm = () => {
               { name: 'colors.foreground', label: 'Foreground' },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -79,8 +77,6 @@ const PaletteForm = () => {
               { name: 'colors.cardForeground', label: 'Card foreground' },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -91,8 +87,6 @@ const PaletteForm = () => {
               },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -103,8 +97,6 @@ const PaletteForm = () => {
               },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -115,8 +107,6 @@ const PaletteForm = () => {
               },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -124,8 +114,6 @@ const PaletteForm = () => {
               { name: 'colors.accentForeground', label: 'Accent foreground' },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -133,8 +121,6 @@ const PaletteForm = () => {
               { name: 'colors.mutedForeground', label: 'Muted foreground' },
             ]}
           />
-        </div>
-        <div className="flex flex-1">
           <PaletteFormDuoField
             control={form.control}
             items={[
@@ -145,33 +131,33 @@ const PaletteForm = () => {
               },
             ]}
           />
-        </div>
-        <div className="flex flex-1 space-x-4">
-          <PaletteFormField
-            control={form.control}
-            name="colors.ring"
-            label="Ring"
-            className="rounded-xl border hover:grow-[2]"
-          />
-          <PaletteFormField
-            control={form.control}
-            name="colors.input"
-            label="Input"
-            className="rounded-xl border hover:grow-[2]"
-          />
-        </div>
-        <div className="flex flex-1 space-x-4">
-          <PaletteFormField
-            control={form.control}
-            name="colors.border"
-            label="Border"
-            className="rounded-xl border hover:grow-[2]"
-          />
-          <PaletteFormNumberField
-            control={form.control}
-            name="shape.borderRadius"
-            label="Border radius"
-          />
+          <div className="flex flex-1 space-x-4">
+            <PaletteFormField
+              control={form.control}
+              name="colors.ring"
+              label="Ring"
+              className="rounded-xl border hover:grow-[2]"
+            />
+            <PaletteFormField
+              control={form.control}
+              name="colors.input"
+              label="Input"
+              className="rounded-xl border hover:grow-[2]"
+            />
+          </div>
+          <div className="flex flex-1 space-x-4">
+            <PaletteFormField
+              control={form.control}
+              name="colors.border"
+              label="Border"
+              className="rounded-xl border hover:grow-[2]"
+            />
+            <PaletteFormNumberField
+              control={form.control}
+              name="shape.borderRadius"
+              label="Border radius"
+            />
+          </div>
         </div>
       </form>
     </Form>

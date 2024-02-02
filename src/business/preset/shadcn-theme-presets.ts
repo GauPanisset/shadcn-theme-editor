@@ -102,7 +102,7 @@ const presets: Preset[] = [
         destructiveForeground: '210 40% 98%',
         border: '217.2 32.6% 17.5%',
         input: '217.2 32.6% 17.5%',
-        ring: '212.7 26.8% 83.9',
+        ring: '212.7 26.8% 83.9%',
       },
       borderRadius: 0.5,
     },

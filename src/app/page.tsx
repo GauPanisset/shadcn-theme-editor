@@ -25,7 +25,7 @@ const HomePage = () => {
             Choose the colors to build your theme
           </CardDescription>
         </CardHeader>
-        <CardContent className="flex-1">
+        <CardContent className="flex-1 overflow-hidden px-0">
           <PaletteForm />
         </CardContent>
       </div>

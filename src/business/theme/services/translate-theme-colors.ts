@@ -1,4 +1,4 @@
-import color from 'color';
+import Color from 'color';
 
 import { ColorsTheme } from '../model/type';
 
@@ -6,7 +6,7 @@ const translateColorsThemeFromHslToHex = (theme: ColorsTheme) =>
   Object.fromEntries(
     Object.entries(theme).map(([themeKey, hslColor]) => [
       themeKey,
-      color(`hsl(${hslColor})`).hex(),
+      Color(`hsl(${hslColor})`).hex(),
     ])
     /**
      * Safe use of `as` here by construction.
@@ -17,7 +17,7 @@ const translateColorsThemeFromHexToHsl = (theme: ColorsTheme) =>
   Object.fromEntries(
     Object.entries(theme).map(([themeKey, hexColor]) => [
       themeKey,
-      color(hexColor)
+      Color(hexColor)
         .hsl()
         .array()
         .map(

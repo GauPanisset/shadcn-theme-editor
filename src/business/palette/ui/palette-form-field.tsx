@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import color from 'color';
+import Color from 'color';
 import { Control, FieldValues, Path } from 'react-hook-form';
 
 import {
@@ -45,7 +45,7 @@ const PaletteFormField = <
       control={control}
       name={name}
       render={({ field: { value, ...otherField } }) => {
-        const currentColor = color(value);
+        const currentColor = Color(value);
         const currentTextColorVariant = currentColor.isDark()
           ? 'dark'
           : 'light';
@@ -53,7 +53,7 @@ const PaletteFormField = <
         return (
           <FormItem
             className={cn(
-              'group relative h-full grow overflow-hidden ring-ring ring-offset-2 ring-offset-background transition-[width,flex] duration-300 focus-within:z-10 focus-within:ring-2',
+              'group relative h-full min-h-12 grow overflow-hidden ring-ring ring-offset-2 ring-offset-background transition-[width,flex] duration-300 focus-within:z-10 focus-within:ring-2',
               className
             )}
           >
