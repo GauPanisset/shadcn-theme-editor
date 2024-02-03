@@ -21,7 +21,6 @@ import { PaletteFormData } from '../model/type';
 import { PaletteFormDuoField } from './palette-form-duo-field';
 import { PaletteFormField } from './palette-form-field';
 import { PaletteFormNumberField } from './palette-form-number-field';
-import { PaletteResetButton } from './palette-reset-button';
 
 const PaletteForm = () => {
   const { theme, themeMode, updateColors, updateBorderRadius } = useTheme();
@@ -57,9 +56,8 @@ const PaletteForm = () => {
         className="flex h-full flex-col"
       >
         <div className="flex w-fit items-center space-x-2 px-6">
-          <PaletteResetButton />
-          <ThemeCodePreview />
           <PresetMenu />
+          <ThemeCodePreview />
           <Separator orientation="vertical" className="h-8" />
           <ThemeModeSwitch />
         </div>
