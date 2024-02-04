@@ -82,16 +82,32 @@ const PairContrastMessage: React.FunctionComponent<Props> = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-fit">
             <DropdownMenuItem
+              disabled={
+                backgroundColor.luminosity() === 0 ||
+                backgroundColor.luminosity() === 1
+              }
               onClick={() => handleEnhanceContrast('background')}
             >
               Adjust background color
             </DropdownMenuItem>
             <DropdownMenuItem
+              disabled={
+                foregroundColor.luminosity() === 0 ||
+                foregroundColor.luminosity() === 1
+              }
               onClick={() => handleEnhanceContrast('foreground')}
             >
               Adjust foreground color
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => handleEnhanceContrast('both')}>
+            <DropdownMenuItem
+              disabled={
+                backgroundColor.luminosity() === 0 ||
+                backgroundColor.luminosity() === 1 ||
+                foregroundColor.luminosity() === 0 ||
+                foregroundColor.luminosity() === 1
+              }
+              onClick={() => handleEnhanceContrast('both')}
+            >
               Adjust both colors
             </DropdownMenuItem>
           </DropdownMenuContent>
