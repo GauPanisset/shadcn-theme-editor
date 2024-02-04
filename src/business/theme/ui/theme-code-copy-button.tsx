@@ -5,7 +5,13 @@ import { Button } from '@/technical/ui/button';
 
 import { makeThemeCode } from '../services/make-theme-code';
 
-const ThemeCodeCopyButton: React.FunctionComponent = () => {
+type Props = {
+  previewType: string;
+};
+
+const ThemeCodeCopyButton: React.FunctionComponent<Props> = ({
+  previewType,
+}) => {
   const [hasCopied, setHasCopied] = useState(false);
 
   useEffect(() => {
@@ -22,11 +28,11 @@ const ThemeCodeCopyButton: React.FunctionComponent = () => {
     <Button
       size="sm"
       onClick={() => {
-        void navigator.clipboard.writeText(makeThemeCode() ?? '');
+        void navigator.clipboard.writeText(makeThemeCode(previewType) ?? '');
         setHasCopied(true);
       }}
-      className="absolute right-4 top-4 z-10"
       variant="secondary"
+      className="w-24"
     >
       {hasCopied ? (
         <CheckIcon className="mr-2 h-4 w-4" />
