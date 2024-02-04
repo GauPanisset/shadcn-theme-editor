@@ -1,17 +1,28 @@
 import Color from 'color';
 import { AlertTriangle } from 'lucide-react';
 
+import { Button } from '@/technical/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/technical/ui/dropdown-menu';
+
 import { computeScoredVisionForPair } from '../services/compute-scored-vision-for-pair';
+import { enhanceContrast } from '../services/enhance-contrast';
 import { getLowestScoredVision } from '../services/get-lowest-scored-vision';
 
 type Props = {
   backgroundColor: Color;
   foregroundColor: Color;
+  onEnhanceContrast: (backgroundColor: Color, foregroundColor: Color) => void;
 };
 
 const PairContrastMessage: React.FunctionComponent<Props> = ({
   backgroundColor,
   foregroundColor,
+  onEnhanceContrast,
 }) => {
   const lowestScoredVisions = getLowestScoredVision(
     computeScoredVisionForPair(backgroundColor, foregroundColor)
@@ -40,10 +51,52 @@ const PairContrastMessage: React.FunctionComponent<Props> = ({
 
   if (!content) return;
 
+  const handleEnhanceContrast = (
+    colorToFix: 'background' | 'foreground' | 'both'
+  ) => {
+    const enhancedColors = enhanceContrast(
+      backgroundColor,
+      foregroundColor,
+      colorToFix
+    );
+    onEnhanceContrast(
+      enhancedColors.backgroundColor,
+      enhancedColors.foregroundColor
+    );
+  };
+
   return (
-    <div className="flex items-center py-1 text-xs">
+    <div className="flex items-center py-1 text-xs text-muted-foreground">
       <AlertTriangle className="mx-4" />
-      <p>{content}</p>
+      <p>
+        {content}{' '}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              size="sm"
+              variant="link"
+              className="h-fit p-0 text-xs font-bold text-primary"
+            >
+              Click to enhance
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-fit">
+            <DropdownMenuItem
+              onClick={() => handleEnhanceContrast('background')}
+            >
+              Adjust background color
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => handleEnhanceContrast('foreground')}
+            >
+              Adjust foreground color
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleEnhanceContrast('both')}>
+              Adjust both colors
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </p>
     </div>
   );
 };

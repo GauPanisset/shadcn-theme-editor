@@ -1,27 +1,31 @@
 import Color from 'color';
 import React from 'react';
-import { Control, FieldValues, Path, useWatch } from 'react-hook-form';
+import { Control, Path, useWatch } from 'react-hook-form';
 
 import { PairContrastMessage } from '@/business/contrast/ui/pair-contrast-message';
+import { translateColorFromHexToHsl } from '@/business/theme/services/translate-theme-colors';
+import { useTheme } from '@/business/theme/services/use-theme';
 
+import { PaletteFormData } from '../model/type';
 import { PaletteFormField } from './palette-form-field';
 
-type FieldItem<Values extends FieldValues, Name extends Path<Values>> = {
+type FieldItem<Values extends PaletteFormData, Name extends Path<Values>> = {
   label: React.ComponentProps<typeof PaletteFormField<Values, Name>>['label'];
   name: React.ComponentProps<typeof PaletteFormField<Values, Name>>['name'];
 };
 
-type Props<Values extends FieldValues, Name extends Path<Values>> = {
+type Props<Values extends PaletteFormData, Name extends Path<Values>> = {
   control: Control<Values>;
   items: [FieldItem<Values, Name>, FieldItem<Values, Name>];
 };
 const PaletteFormDuoField = <
-  Values extends FieldValues,
+  Values extends PaletteFormData,
   Name extends Path<Values>,
 >({
   control,
   items,
 }: Props<Values, Name>) => {
+  const { updateColors } = useTheme();
   const watchedBackgroundColor = useWatch({ name: items[0].name });
   const watchedForegroundColor = useWatch({ name: items[1].name });
 
@@ -41,6 +45,16 @@ const PaletteFormDuoField = <
       <PairContrastMessage
         backgroundColor={Color(watchedBackgroundColor)}
         foregroundColor={Color(watchedForegroundColor)}
+        onEnhanceContrast={(backgroundColor, foregroundColor) => {
+          updateColors({
+            [items[0].name.replace('colors.', '')]: translateColorFromHexToHsl(
+              backgroundColor.hex()
+            ),
+            [items[1].name.replace('colors.', '')]: translateColorFromHexToHsl(
+              foregroundColor.hex()
+            ),
+          });
+        }}
       />
     </div>
   );
