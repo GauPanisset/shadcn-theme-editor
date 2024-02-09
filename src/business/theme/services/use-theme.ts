@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { useTheme as useThemeMode } from 'next-themes';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useThemeHistory } from '@/business/history/services/use-theme-history';
 import { DeepPartial } from '@/technical/typescript/deep-partial';
@@ -88,10 +88,17 @@ const useTheme = () => {
     },
   });
 
+  useEffect(() => {
+    setThemeInCss({
+      colors: theme[currentThemeMode],
+      shape: { borderRadius: theme.borderRadius },
+    });
+  }, [currentThemeMode, theme]);
+
   const updateTheme = useCallback(
     (
       partialTheme: DeepPartial<Theme>,
-      options?: { shouldUpdateCss?: boolean; shouldUpdateHistory?: boolean }
+      options?: { shouldUpdateHistory?: boolean }
     ) => {
       setTheme((currentTheme) => {
         const newTheme = {
@@ -113,18 +120,10 @@ const useTheme = () => {
           }),
         };
 
-        const { shouldUpdateCss, shouldUpdateHistory } = {
-          shouldUpdateCss: true,
+        const { shouldUpdateHistory } = {
           shouldUpdateHistory: true,
           ...options,
         };
-
-        if (shouldUpdateCss) {
-          setThemeInCss({
-            colors: newTheme[currentThemeMode],
-            shape: { borderRadius: newTheme.borderRadius },
-          });
-        }
 
         if (shouldUpdateHistory) {
           pushInThemeHistory(newTheme);
@@ -133,7 +132,7 @@ const useTheme = () => {
         return newTheme;
       });
     },
-    [currentThemeMode, pushInThemeHistory, setTheme]
+    [pushInThemeHistory, setTheme]
   );
 
   return {

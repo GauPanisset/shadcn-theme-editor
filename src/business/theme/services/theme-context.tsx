@@ -15,7 +15,7 @@ type ThemeContextType = {
   undoThemeHistory: () => void;
   updateTheme: (
     theme: DeepPartial<Theme>,
-    options?: { shouldUpdateCss?: boolean; shouldUpdateHistory?: boolean }
+    options?: { shouldUpdateHistory?: boolean }
   ) => void;
 };
 
