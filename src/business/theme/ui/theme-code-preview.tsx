@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowDownLeftFromSquare, Copy } from 'lucide-react';
+import { ArrowUpRightFromSquare, Copy } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/technical/ui/button';
@@ -60,7 +60,7 @@ const ThemeCodePreview: React.FunctionComponent = () => {
       <DialogContent className="max-w-2xl outline-none">
         <DialogHeader className="font-mono">
           <DialogTitle>Theme</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="h-10">
             {previewType === 'css'
               ? 'Copy and paste the following code into your CSS file.'
               : null}
@@ -79,7 +79,7 @@ const ThemeCodePreview: React.FunctionComponent = () => {
                     target="_blank"
                   >
                     Color Import/Export
-                    <ArrowDownLeftFromSquare className="ml-1 inline h-4 w-4" />
+                    <ArrowUpRightFromSquare className="ml-1 inline h-4 w-4" />
                   </a>
                 </Button>
                 <span> to import the theme.</span>
