@@ -1,6 +1,6 @@
 import { Palette } from 'lucide-react';
 
-import { useTheme } from '@/business/theme/services/use-theme';
+import { useThemeContext } from '@/business/theme/services/theme-context';
 import { Button } from '@/technical/ui/button';
 import { cn } from '@/technical/ui/helpers';
 import {
@@ -18,7 +18,7 @@ import {
 import { presets } from '../shadcn-theme-presets';
 
 const PresetMenu: React.FunctionComponent = () => {
-  const { themeMode, updateTheme } = useTheme();
+  const { themeMode, updateTheme } = useThemeContext();
 
   return (
     <Popover>

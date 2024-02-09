@@ -26,4 +26,6 @@ type Theme = {
   borderRadius: number;
 };
 
-export type { ColorsTheme, Theme };
+type ThemeMode = 'dark' | 'light';
+
+export type { ColorsTheme, Theme, ThemeMode };

@@ -27,14 +27,14 @@ import {
 } from '@/technical/ui/tooltip';
 
 import { themeCodeWrapperId } from '../services/make-theme-code';
-import { useTheme } from '../services/use-theme';
+import { useThemeContext } from '../services/theme-context';
 import { ThemeCodeCopyButton } from './theme-code-copy-button';
 import { ThemeCodeCssPreview } from './theme-code-css-preview';
 import { ThemeCodeJsonPreview } from './theme-code-json-preview';
 
 const ThemeCodePreview: React.FunctionComponent = () => {
   const [previewType, setPreviewType] = useState('css');
-  const { theme } = useTheme();
+  const { theme } = useThemeContext();
 
   return (
     <Dialog>

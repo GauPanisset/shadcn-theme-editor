@@ -3,8 +3,8 @@ import React from 'react';
 import { Control, Path, useWatch } from 'react-hook-form';
 
 import { PairContrastMessage } from '@/business/contrast/ui/pair-contrast-message';
+import { useThemeContext } from '@/business/theme/services/theme-context';
 import { translateColorFromHexToHsl } from '@/business/theme/services/translate-theme-colors';
-import { useTheme } from '@/business/theme/services/use-theme';
 
 import { PaletteFormData } from '../model/type';
 import { PaletteFormField } from './palette-form-field';
@@ -25,7 +25,7 @@ const PaletteFormDuoField = <
   control,
   items,
 }: Props<Values, Name>) => {
-  const { updateColors } = useTheme();
+  const { themeMode, updateTheme } = useThemeContext();
   const watchedBackgroundColor = useWatch({ name: items[0].name });
   const watchedForegroundColor = useWatch({ name: items[1].name });
 
@@ -46,13 +46,13 @@ const PaletteFormDuoField = <
         backgroundColor={Color(watchedBackgroundColor)}
         foregroundColor={Color(watchedForegroundColor)}
         onEnhanceContrast={(backgroundColor, foregroundColor) => {
-          updateColors({
-            [items[0].name.replace('colors.', '')]: translateColorFromHexToHsl(
-              backgroundColor.hex()
-            ),
-            [items[1].name.replace('colors.', '')]: translateColorFromHexToHsl(
-              foregroundColor.hex()
-            ),
+          updateTheme({
+            [themeMode]: {
+              [items[0].name.replace('colors.', '')]:
+                translateColorFromHexToHsl(backgroundColor.hex()),
+              [items[1].name.replace('colors.', '')]:
+                translateColorFromHexToHsl(foregroundColor.hex()),
+            },
           });
         }}
       />

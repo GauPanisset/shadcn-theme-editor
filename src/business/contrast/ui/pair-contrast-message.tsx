@@ -66,7 +66,16 @@ const PairContrastMessage: React.FunctionComponent<Props> = ({
   };
 
   return (
-    <div className="flex items-center py-1 text-xs text-muted-foreground">
+    <div
+      className="flex items-center py-1 text-xs text-muted-foreground"
+      onBlur={(event) => {
+        /**
+         * As the blur event is used to push theme updates in the theme history,
+         * prevent blur events on these button to propagate.
+         */
+        event.stopPropagation();
+      }}
+    >
       <AlertTriangle className="mx-4" />
       <p>
         {content}{' '}
