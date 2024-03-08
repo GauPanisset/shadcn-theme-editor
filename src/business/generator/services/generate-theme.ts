@@ -53,16 +53,25 @@ const createBorderColor = (
     .lightness(themeMode === 'dark' ? borderLightness : 50 + borderLightness)
     .saturationl(borderSaturation);
 
-const generateTheme = (
-  borderLightness: number,
-  borderSaturation: number,
-  cardLightness: number,
-  cardSaturation: number,
-  primary: Color,
-  secondary: Color,
-  background: Color,
-  themeMode: ThemeMode
-): ColorsTheme => {
+const generateTheme = ({
+  borderLightness,
+  borderSaturation,
+  cardLightness,
+  cardSaturation,
+  primary,
+  secondary,
+  background,
+  themeMode,
+}: {
+  borderLightness: number;
+  borderSaturation: number;
+  cardLightness: number;
+  cardSaturation: number;
+  primary: Color;
+  secondary: Color;
+  background: Color;
+  themeMode: ThemeMode;
+}): ColorsTheme => {
   const foreground = createForegroundColor(primary, themeMode);
   const card = createCardColor(
     background,
