@@ -2,8 +2,8 @@ import Color from 'color';
 
 import { ColorsTheme } from '../model/type';
 
-const translateColorFromHexToHsl = (hexColor: string) =>
-  Color(hexColor)
+const getHslParamsFromColor = (color: Color): string =>
+  color
     .hsl()
     .array()
     .map(
@@ -12,10 +12,13 @@ const translateColorFromHexToHsl = (hexColor: string) =>
     )
     .join(' ');
 
+const translateColorFromHexToHsl = (hexColor: string) =>
+  getHslParamsFromColor(Color(hexColor));
+
 const translateColorFromHslToHex = (hslColor: string) =>
   Color(`hsl(${hslColor})`).hex();
 
-const translateColorsThemeFromHslToHex = (theme: ColorsTheme) =>
+const translateColorsThemeFromHslToHex = (theme: Partial<ColorsTheme>) =>
   Object.fromEntries(
     Object.entries(theme).map(([themeKey, hslColor]) => [
       themeKey,
@@ -26,7 +29,7 @@ const translateColorsThemeFromHslToHex = (theme: ColorsTheme) =>
      */
   ) as ColorsTheme;
 
-const translateColorsThemeFromHexToHsl = (theme: ColorsTheme) =>
+const translateColorsThemeFromHexToHsl = (theme: Partial<ColorsTheme>) =>
   Object.fromEntries(
     Object.entries(theme).map(([themeKey, hexColor]) => [
       themeKey,
@@ -38,6 +41,7 @@ const translateColorsThemeFromHexToHsl = (theme: ColorsTheme) =>
   ) as ColorsTheme;
 
 export {
+  getHslParamsFromColor,
   translateColorFromHexToHsl,
   translateColorFromHslToHex,
   translateColorsThemeFromHexToHsl,

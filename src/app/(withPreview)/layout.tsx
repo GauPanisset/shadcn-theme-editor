@@ -2,7 +2,6 @@
 
 import { CardsDemo } from '@/business/demo/ui';
 import { DesignSystem } from '@/business/design-system/ui';
-import { PaletteForm } from '@/business/palette/ui/palette-form';
 import { ThemeProvider } from '@/business/theme/services/theme-context';
 import { useHasMounted } from '@/technical/hooks/use-has-mounted';
 import {
@@ -13,7 +12,11 @@ import {
 } from '@/technical/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/technical/ui/tabs';
 
-const HomePage = () => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const LayoutWithPreview: React.FunctionComponent<Props> = ({ children }) => {
   const hasMounted = useHasMounted();
 
   if (!hasMounted) return null;
@@ -28,8 +31,8 @@ const HomePage = () => {
               Choose the colors to build your theme
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-1 overflow-hidden p-0 pb-5">
-            <PaletteForm />
+          <CardContent className="min-h-0 flex-1 p-0 pb-5">
+            {children}
           </CardContent>
         </div>
         <Tabs defaultValue="demo" className="flex-1">
@@ -66,4 +69,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default LayoutWithPreview;

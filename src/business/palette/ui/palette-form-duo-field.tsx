@@ -6,8 +6,8 @@ import { PairContrastMessage } from '@/business/contrast/ui/pair-contrast-messag
 import { useThemeContext } from '@/business/theme/services/theme-context';
 import { translateColorFromHexToHsl } from '@/business/theme/services/translate-theme-colors';
 
+import { PaletteFormField } from '../../theme/ui/palette-form-field';
 import { PaletteFormData } from '../model/type';
-import { PaletteFormField } from './palette-form-field';
 
 type FieldItem<Values extends PaletteFormData, Name extends Path<Values>> = {
   label: React.ComponentProps<typeof PaletteFormField<Values, Name>>['label'];

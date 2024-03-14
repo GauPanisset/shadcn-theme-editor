@@ -1,81 +1,50 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useMemo } from 'react';
 
-import { HistoryButtons } from '@/business/history/ui/history-buttons';
-import { PresetMenu } from '@/business/preset/ui/preset-menu';
 import { useThemeContext } from '@/business/theme/services/theme-context';
 import {
   translateColorsThemeFromHexToHsl,
   translateColorsThemeFromHslToHex,
 } from '@/business/theme/services/translate-theme-colors';
-import { ThemeCodePreview } from '@/business/theme/ui/theme-code-preview';
-import { ThemeModeSwitch } from '@/business/theme/ui/theme-mode-switch';
-import { debounce } from '@/technical/helpers/debounce';
+import { useThemeForm } from '@/business/theme/services/use-theme-form';
+import { FormActionsBar } from '@/business/theme/ui/form-actions-bar';
 import { Form } from '@/technical/ui/form';
-import { Separator } from '@/technical/ui/separator';
 
+import { PaletteFormField } from '../../theme/ui/palette-form-field';
 import { paletteFormSchema } from '../model/schema';
-import { PaletteFormData } from '../model/type';
 import { PaletteFormDuoField } from './palette-form-duo-field';
-import { PaletteFormField } from './palette-form-field';
 import { PaletteFormNumberField } from './palette-form-number-field';
 
 const PaletteForm = () => {
-  const { theme, themeMode, updateTheme } = useThemeContext();
+  const { theme, themeMode } = useThemeContext();
 
-  const form = useForm<PaletteFormData>({
-    resolver: zodResolver(paletteFormSchema),
-    defaultValues: {
+  const defaultValues = useMemo(
+    () => ({
       colors: translateColorsThemeFromHslToHex(theme[themeMode]),
       shape: { borderRadius: theme.borderRadius },
-    },
-    mode: 'onChange',
-  });
+    }),
+    [theme, themeMode]
+  );
 
-  const onBlur = (values: PaletteFormData) => {
-    updateTheme({
-      [themeMode]: translateColorsThemeFromHexToHsl(values.colors),
-      borderRadius: values.shape.borderRadius,
-    });
-  };
-
-  /**
-   * To prevent theme history flooding, we only push the theme on blur not on change.
-   */
-  const onChange = (values: PaletteFormData) => {
-    updateTheme(
-      {
+  const { form, handleBlur, handleChange } = useThemeForm({
+    defaultValues,
+    formSchema: paletteFormSchema,
+    translateFormDataToTheme: (values) => {
+      return {
         [themeMode]: translateColorsThemeFromHexToHsl(values.colors),
         borderRadius: values.shape.borderRadius,
-      },
-      { shouldUpdateHistory: false }
-    );
-  };
-
-  useEffect(() => {
-    form.reset({
-      colors: translateColorsThemeFromHslToHex(theme[themeMode]),
-      shape: { borderRadius: theme.borderRadius },
-    });
-  }, [theme, themeMode, form]);
+      };
+    },
+  });
 
   return (
     <Form {...form}>
       <div className="flex h-full flex-col">
-        <div className="flex w-fit items-center space-x-2 px-6">
-          <HistoryButtons />
-          <Separator orientation="vertical" className="h-8" />
-          <PresetMenu />
-          <ThemeCodePreview />
-          <Separator orientation="vertical" className="h-8" />
-          <ThemeModeSwitch />
-        </div>
+        <FormActionsBar />
         <form
-          onChange={debounce(form.handleSubmit(onChange), 300)}
-          onBlur={form.handleSubmit(onBlur)}
+          onBlur={handleBlur}
+          onChange={handleChange}
           onSubmit={(event) => {
             event.preventDefault();
           }}
