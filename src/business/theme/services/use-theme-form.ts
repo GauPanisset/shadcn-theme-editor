@@ -23,10 +23,12 @@ const useThemeForm = <FormData extends FieldValues>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
+  const isDirty = form.formState.isDirty;
 
   const { updateTheme } = useThemeContext();
 
   const onBlur = (values: FormData) => {
+    if (!isDirty) return;
     updateTheme(translateFormDataToTheme(values));
   };
 
@@ -34,6 +36,7 @@ const useThemeForm = <FormData extends FieldValues>({
    * To prevent theme history flooding, we only push the theme on blur not on change.
    */
   const onChange = (values: FormData) => {
+    if (!isDirty) return;
     updateTheme(translateFormDataToTheme(values), {
       shouldUpdateHistory: false,
     });
