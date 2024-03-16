@@ -2,11 +2,12 @@
 
 import Color from 'color';
 import { Dices } from 'lucide-react';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { useThemeContext } from '@/business/theme/services/theme-context';
 import { randomInt } from '@/technical/helpers/random-int';
 import { Button } from '@/technical/ui/button';
+import { KeyboardKey } from '@/technical/ui/keyboard-key';
 
 import { generateTheme } from '../services/generate-theme';
 
@@ -72,24 +73,11 @@ const RandomThemeButton = () => {
     updateTheme({ dark: darkTheme, light: lightTheme });
   }, [updateTheme]);
 
-  useEffect(() => {
-    const spaceKeyListener = (event: KeyboardEvent) => {
-      if (event.code === 'Space') {
-        makeRandomTheme();
-      }
-    };
-
-    window.addEventListener('keydown', spaceKeyListener);
-
-    return () => {
-      window.removeEventListener('keydown', spaceKeyListener);
-    };
-  }, [makeRandomTheme]);
-
   return (
-    <Button onClick={makeRandomTheme} size="lg">
+    <Button onClick={makeRandomTheme} size="lg" keyboardShortcut={['space']}>
       <Dices className="mr-2 h-4 w-4" />
-      Generate random theme
+      Generate theme
+      <KeyboardKey className="ml-4">space</KeyboardKey>
     </Button>
   );
 };

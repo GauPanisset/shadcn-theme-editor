@@ -6,6 +6,7 @@ import { makeGeneratorFormDataFromTheme } from '@/business/generator/services/ma
 import { useThemeContext } from '@/business/theme/services/theme-context';
 import { Button } from '@/technical/ui/button';
 import { cn } from '@/technical/ui/helpers';
+import { KeyboardKey } from '@/technical/ui/keyboard-key';
 import {
   Popover,
   PopoverContent,
@@ -29,13 +30,21 @@ const PresetMenu: React.FunctionComponent = () => {
         <Tooltip>
           <TooltipTrigger asChild>
             <PopoverTrigger asChild>
-              <Button variant="ghost" className="rounded-full" size="icon">
+              <Button
+                variant="ghost"
+                className="rounded-full"
+                size="icon"
+                keyboardShortcut={['cmd', 'O']}
+              >
                 <Palette />
               </Button>
             </PopoverTrigger>
           </TooltipTrigger>
           <TooltipContent>
             <p>Pick a preset</p>
+            <div className="text-muted-foreground">
+              <KeyboardKey>Cmd</KeyboardKey> + <KeyboardKey>O</KeyboardKey>
+            </div>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

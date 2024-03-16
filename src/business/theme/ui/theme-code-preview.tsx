@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/technical/ui/dialog';
+import { KeyboardKey } from '@/technical/ui/keyboard-key';
 import {
   Select,
   SelectContent,
@@ -47,13 +48,17 @@ const ThemeCodePreview: React.FunctionComponent = () => {
                 className="rounded-full"
                 variant="ghost"
                 size="icon"
+                keyboardShortcut={['cmd', 'E']}
               >
                 <Copy />
               </Button>
             </DialogTrigger>
           </TooltipTrigger>
           <TooltipContent>
-            <p>Copy code</p>
+            <p>Export theme</p>
+            <div className="text-muted-foreground">
+              <KeyboardKey>Cmd</KeyboardKey> + <KeyboardKey>E</KeyboardKey>
+            </div>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>

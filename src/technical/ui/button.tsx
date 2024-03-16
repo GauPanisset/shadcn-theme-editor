@@ -37,15 +37,65 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  keyboardShortcut?: (KeyboardEvent['code'] | 'cmd' | 'alt' | 'shift')[];
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, variant, size, asChild = false, keyboardShortcut, ...props },
+    ref
+  ) => {
+    const innerRef = React.useRef<HTMLButtonElement>(null);
+    React.useImperativeHandle(ref, () => innerRef.current!, []);
+
     const Comp = asChild ? Slot : 'button';
+
+    const onClick = props.onClick;
+
+    const keyboardHandler = React.useCallback(
+      (event: KeyboardEvent) => {
+        if (!keyboardShortcut?.length || !onClick || !innerRef.current) return;
+
+        const { code, key, ctrlKey, metaKey, altKey, shiftKey } = event;
+
+        const lowerCaseNoModifierKeyboardShortcut = keyboardShortcut
+          ?.filter((bind) => !['ctrl', 'cmd', 'shift', 'alt'].includes(bind))
+          .map((bind) => bind.toLowerCase());
+
+        if (
+          !lowerCaseNoModifierKeyboardShortcut.includes(code.toLowerCase()) &&
+          !lowerCaseNoModifierKeyboardShortcut.includes(key.toLowerCase())
+        )
+          return;
+        if (keyboardShortcut?.includes('cmd') && !metaKey) return;
+        if (!keyboardShortcut?.includes('cmd') && metaKey) return;
+
+        if (keyboardShortcut?.includes('ctrl') && !ctrlKey) return;
+        if (!keyboardShortcut?.includes('ctrl') && ctrlKey) return;
+
+        if (keyboardShortcut?.includes('shift') && !shiftKey) return;
+        if (!keyboardShortcut?.includes('shift') && shiftKey) return;
+
+        if (keyboardShortcut?.includes('alt') && !altKey) return;
+        if (!keyboardShortcut?.includes('alt') && altKey) return;
+
+        innerRef.current.click();
+        event.preventDefault();
+      },
+      [keyboardShortcut, innerRef, onClick]
+    );
+
+    React.useEffect(() => {
+      window.addEventListener('keydown', keyboardHandler);
+      return () => {
+        window.removeEventListener('keydown', keyboardHandler);
+      };
+    }, [keyboardHandler]);
+
     return (
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
+        ref={innerRef}
         {...props}
       />
     );

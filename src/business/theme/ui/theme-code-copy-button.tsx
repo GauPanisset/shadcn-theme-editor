@@ -26,13 +26,13 @@ const ThemeCodeCopyButton: React.FunctionComponent<Props> = ({
 
   return (
     <Button
-      size="sm"
       onClick={() => {
         void navigator.clipboard.writeText(makeThemeCode(previewType) ?? '');
         setHasCopied(true);
       }}
       variant="secondary"
       className="w-24"
+      keyboardShortcut={['cmd', 'C']}
     >
       {hasCopied ? (
         <CheckIcon className="mr-2 h-4 w-4" />
