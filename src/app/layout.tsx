@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
@@ -32,6 +33,7 @@ const RootLayout: React.FunctionComponent<Props> = ({ children }) => {
             {children}
           </main>
         </ThemeModeProvider>
+        <Analytics />
       </body>
     </html>
   );
